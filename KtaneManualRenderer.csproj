@@ -6,9 +6,6 @@
     <TargetFramework>net472</TargetFramework>
     <LangVersion>11</LangVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <OutputPath>..\Builds\$(Configuration)\</OutputPath>
-    <IntermediateOutputPath>..\Builds\$(Configuration)\obj-$(AssemblyName)\</IntermediateOutputPath>
-    <BaseIntermediateOutputPath>..\Builds\$(Configuration)\obj-$(AssemblyName)\</BaseIntermediateOutputPath>
     <TargetFrameworkProfile />
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
