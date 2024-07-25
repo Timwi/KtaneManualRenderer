@@ -44,14 +44,19 @@ namespace Propeller.KTANE
             if (int.TryParse(pageRaw, out int pageParsed))
                 page = pageParsed;
 
-            PdfDocument pdf;
-            byte[][] pages;
+            PdfDocument pdf = null;
+            byte[][] pages = null;
 
             lock (_pdfs)
             {
                 if (_pdfs.TryGetValue(name, out var tup))
                     (pdf, pages, _) = tup;
-                else
+                _pdfs.RemoveAllByValue(v => (DateTime.UtcNow - v.lastAccess).TotalHours > 24);
+            }
+
+            try
+            {
+                if (pages == null)
                 {
                     var res = new HttpClient()
                         .GetAsync(string.Format(Settings.UrlTemplate, name.UrlEscape()))
@@ -64,11 +69,6 @@ namespace Propeller.KTANE
                     pages = new byte[pdf.PageCount][];
                 }
 
-                _pdfs.RemoveAllByValue(v => (DateTime.UtcNow - v.lastAccess).TotalHours > 24);
-            }
-
-            try
-            {
                 if (page == null)
                 {
                     lock (_pdfs)
